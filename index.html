@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OUAHBI LIVE - مشاهدة مباريات كرة القدم بث مباشر</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <h1>OUAHBI LIVE</h1>
+        </div>
+        <nav class="main-nav">
+            <a href="#" class="nav-item active"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="#" class="nav-item"><i class="fas fa-calendar-alt"></i> جدول المباريات</a>
+            <a href="#" class="nav-item"><i class="fas fa-newspaper"></i> أخبار الرياضة</a>
+            <a href="#" class="nav-item"><i class="fas fa-envelope"></i> تواصل معنا</a>
+        </nav>
+        <div class="search-bar">
+            <input type="text" placeholder="ابحث عن مباراة أو فريق...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <section class="matches-schedule">
+            <h2 class="section-title"><i class="fas fa-futbol"></i> أهم مباريات اليوم</h2>
+            <div class="match-filters">
+                <button class="filter-btn active">مباريات اليوم</button>
+                <button class="filter-btn">مباريات الأمس</button>
+                <button class="filter-btn">مباريات الغد</button>
+            </div>
+
+            <div class="match-list">
+                
+                <div class="match-card">
+                    <div class="match-info">
+                        <div class="team">
+                            <img src="https://via.placeholder.com/40/0d47a1/FFFFFF?text=Wydad" alt="الوداد" class="team-logo">
+                            <span class="team-name">الوداد</span>
+                        </div>
+                        <div class="score-status">
+                            <span class="score">2 - 1</span>
+                            <span class="status ended">انتهت</span>
+                        </div>
+                        <div class="team">
+                            <img src="https://via.placeholder.com/40/ff4500/FFFFFF?text=Raja" alt="الرجاء" class="team-logo">
+                            <span class="team-name">الرجاء</span>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="league"><i class="fas fa-trophy"></i> الدوري المغربي</span>
+                        <span class="time"><i class="fas fa-clock"></i> 20:00 بتوقيت غرينتش</span>
+                        <a href="#live-stream" class="watch-btn"><i class="fas fa-play-circle"></i> شاهد الآن</a>
+                    </div>
+                </div>
+
+                <div class="match-card">
+                    <div class="match-info">
+                        <div class="team">
+                            <img src="https://via.placeholder.com/40/00FFFF/000000?text=City" alt="مانشستر سيتي" class="team-logo">
+                            <span class="team-name">مانشستر سيتي</span>
+                        </div>
+                        <div class="score-status">
+                            <span class="score">0 - 0</span>
+                            <span class="status live">مباشر</span>
+                        </div>
+                        <div class="team">
+                            <img src="https://via.placeholder.com/40/FF6347/FFFFFF?text=Arsenal" alt="أرسنال" class="team-logo">
+                            <span class="team-name">أرسنال</span>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="league"><i class="fas fa-trophy"></i> الدوري الإنجليزي الممتاز</span>
+                        <span class="time"><i class="fas fa-clock"></i> الدقيقة 75</span>
+                        <a href="#live-stream" class="watch-btn"><i class="fas fa-play-circle"></i> شاهد الآن</a>
+                    </div>
+                </div>
+                
+                <div class="match-card">
+                    <div class="match-info">
+                        <div class="team">
+                            <img src="https://via.placeholder.com/40/008000/FFFFFF?text=Ahly" alt="الأهلي" class="team-logo">
+                            <span class="team-name">الأهلي المصري</span>
+                        </div>
+                        <div class="score-status">
+                            <span class="score">-- : --</span>
+                            <span class="status upcoming">قريباً</span>
+                        </div>
+                        <div class="team">
+                            <img src="https://via.placeholder.com/40/FFA500/000000?text=Zamalek" alt="الزمالك" class="team-logo">
+                            <span class="team-name">الزمالك</span>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="league"><i class="fas fa-trophy"></i> الدوري المصري</span>
+                        <span class="time"><i class="fas fa-clock"></i> 22:00 بتوقيت القاهرة</span>
+                        <a href="#" class="watch-btn upcoming-btn"><i class="fas fa-info-circle"></i> تفاصيل</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        
+        <section class="live-stream-section" id="live-stream">
+            <h2 class="section-title"><i class="fas fa-tv"></i> بث مباشر: مباراة الوداد ضد الرجاء</h2>
+            
+            <div class="video-player-box">
+                <div class="placeholder-text">
+                    مشغل الفيديو غير متوفر الآن. يرجى الانتظار أو تحديد سيرفر.
+                </div>
+            </div>
+            
+            <div class="stream-controls">
+                <button class="control-btn"><i class="fas fa-cog"></i> إعدادات</button>
+                <button class="control-btn"><i class="fas fa-expand"></i> شاشة كاملة</button>
+                <button class="control-btn active">سيرفر 1</button>
+                <button class="control-btn">سيرفر 2</button>
+                <button class="control-btn">سيرفر 3 (HD)</button>
+            </div>
+            
+            <div class="comments-section">
+                <h3><i class="fas fa-comments"></i> تعليقات المشاهدين</h3>
+                <textarea placeholder="اكتب تعليقك هنا..."></textarea>
+                <button class="comment-btn">إرسال</button>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <p>&copy; 2025 OUAHBI LIVE. جميع الحقوق محفوظة. <a href="#">سياسة الخصوصية</a></p>
+        <div class="social-links">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
