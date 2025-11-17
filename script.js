@@ -1,72 +1,141 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. تحديد العناصر الرئيسية
-    const serverButtons = document.querySelectorAll('.stream-controls .control-btn');
-    const videoPlayerBox = document.querySelector('.video-player-box');
-    
-    // =======================================================
-    // ** هذا هو المكان الوحيد الذي يجب تعديله لكل مباراة جديدة **
-    // =======================================================
-    
-    // ضع هنا أكواد الـ IFRAME الكاملة التي تجلبها من مصدر البث.
-    // يجب أن تكون القيمة الموضوعة بين علامتي التنصيص هي كود iframe كامل.
-    const streams = {
-        'سيرفر 1': '<iframe src="https://REAL-STREAM-LINK-SERVER-1.com/embed/example" width="100%" height="100%" allowfullscreen frameborder="0"></iframe>', 
-        
-        'سيرفر 2': '<iframe src="https://REAL-STREAM-LINK-SERVER-2.com/embed/example" width="100%" height="100%" allowfullscreen frameborder="0"></iframe>',
-        
-        'سيرفر 3 (HD)': '<iframe src="https://REAL-STREAM-LINK-SERVER-3-HD.com/embed/example" width="100%" height="100%" allowfullscreen frameborder="0"></iframe>',
-    };
-    
-    // =======================================================
-    
-    
-    // 2. دالة تبديل السيرفرات
-    const switchServer = (button) => {
-        const serverName = button.textContent.trim();
+// وظيفة الوضع المظلم
+const darkModeToggle = document.getElementById('darkModeToggle');
+const body = document.body;
 
-        // معالجة أزرار الإعدادات والشاشة الكاملة (بدون تغيير)
-        if (serverName.includes('إعدادات')) {
-            videoPlayerBox.innerHTML = '<div class="placeholder-text">الإعدادات تُظهر في مشغل البث الفعلي.</div>';
-            return;
-        }
-        if (serverName.includes('شاشة كاملة')) {
-            const iframe = videoPlayerBox.querySelector('iframe');
-            if (iframe) {
-                 iframe.requestFullscreen ? iframe.requestFullscreen() : alert('المتصفح لا يدعم الشاشة الكاملة لـ iframe تلقائياً.');
-            } else {
-                 alert('يرجى اختيار سيرفر أولاً لتفعيل وضع الشاشة الكاملة.');
-            }
-            return;
-        }
+function toggleDarkMode() {
+    body.classList.toggle('dark-mode');
+    const isDark = body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark);
+    darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+}
 
-        // إزالة حالة النشاط من جميع أزرار السيرفرات
-        serverButtons.forEach(btn => {
-             if (!btn.textContent.includes('إعدادات') && !btn.textContent.includes('شاشة كاملة')) {
-                 btn.classList.remove('active');
-             }
-        });
-        button.classList.add('active');
+// تحميل الوضع المظلم من localStorage
+const savedDarkMode = localStorage.getItem('darkMode');
+if (savedDarkMode === 'true') {
+    body.classList.add('dark-mode');
+    darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+}
 
-        // تحديث محتوى مشغل الفيديو برابط السيرفر
-        if (streams[serverName]) {
-            videoPlayerBox.innerHTML = streams[serverName];
+darkModeToggle.addEventListener('click', toggleDarkMode);
+
+// وظيفة البحث داخل الصفحة
+const searchButton = document.getElementById('searchButton');
+const searchInput = document.getElementById('searchInput');
+
+searchButton.addEventListener('click', () => {
+    const query = searchInput.value.toLowerCase();
+    const articles = document.querySelectorAll('.news-card, .feature-article');
+    articles.forEach(article => {
+        const text = article.textContent.toLowerCase();
+        // إخفاء أو إظهار العنصر
+        if (text.includes(query) || query === '') {
+            article.style.display = 'block';
         } else {
-            videoPlayerBox.innerHTML = '<div class="placeholder-text">خطأ: لم يتم العثور على رابط البث لهذا السيرفر.</div>';
+            article.style.display = 'none';
         }
-    };
-
-    // 3. إضافة مستمعي الأحداث وتحميل السيرفر الأول افتراضياً
-    serverButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            switchServer(event.currentTarget);
-        });
     });
+    // يمكن إضافة رسالة "لا توجد نتائج" هنا إذا لزم الأمر
+});
 
-    // يتم تحميل السيرفر الأول افتراضياً
-    const defaultServer = Array.from(serverButtons).find(btn => btn.textContent.includes('سيرفر 1'));
-    if (defaultServer) {
-        // نطبق حالة النشاط يدوياً ونشغل السيرفر
-        defaultServer.classList.add('active');
-        switchServer(defaultServer);
+// وظيفة الmodal للتفاصيل (تم تحديثها لدعم الفيديو)
+const modal = document.getElementById('newsModal');
+const modalTitle = document.getElementById('modalTitle');
+const modalImage = document.getElementById('modalImage');
+const modalVideoFrame = document.getElementById('modalVideoFrame');
+const modalContent = document.getElementById('modalContent');
+const modalDate = document.getElementById('modalDate');
+const modalComments = document.getElementById('modalComments');
+const closeBtn = document.querySelector('.close-btn');
+
+// دالة لمعالجة فتح الـ Modal
+document.addEventListener('click', (e) => {
+    if (e.target.matches('.details-btn')) {
+        e.preventDefault();
+        const btn = e.target;
+        const dataType = btn.getAttribute('data-type');
+        
+        // إخفاء جميع العناصر قبل العرض
+        modalImage.style.display = 'none';
+        modalVideoFrame.style.display = 'none';
+        modalContent.textContent = ''; // مسح المحتوى القديم
+        modalDate.textContent = '';
+        modalComments.textContent = '';
+        
+        // تعيين العنوان (من data-title أو من العنصر السابق)
+        const articleTitleElement = btn.closest('.article-content') ? btn.closest('.article-content').querySelector('.article-title') : btn.closest('.match-item').querySelector('span');
+        modalTitle.textContent = btn.getAttribute('data-title') || articleTitleElement.textContent;
+
+
+        if (dataType === 'news') {
+            // عرض الخبر العادي
+            const image = btn.getAttribute('data-image');
+            const content = btn.getAttribute('data-content');
+            const date = btn.getAttribute('data-date');
+            const comments = btn.getAttribute('data-comments');
+
+            modalImage.style.backgroundImage = `url(${image})`;
+            modalContent.textContent = content;
+            modalDate.textContent = date;
+            modalComments.textContent = comments;
+            
+            modalImage.style.display = 'block';
+            
+        } else if (dataType === 'live') {
+            // عرض البث المباشر - الكود المحدث
+            let videoUrl = btn.getAttribute('data-url');
+            
+            // إزالة معلمات التشغيل التلقائي/الصوت إن وجدت لضمان التوافق
+            videoUrl = videoUrl.replace('?autoplay=1&mute=0', '').replace('?autoplay=1&mute=1', '');
+
+            // بناء كود iframe يوتيوب
+            const youtubeIframe = `
+                <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src="${videoUrl}" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen
+                    sandbox="allow-scripts allow-same-origin allow-presentation"
+                ></iframe>`;
+
+            // إضافة iframe إلى حاوية الفيديو
+            modalVideoFrame.innerHTML = youtubeIframe;
+            modalVideoFrame.style.display = 'block';
+            
+            // إخفاء المحتوى النصي المخصص للأخبار
+            modalContent.textContent = '';
+            modalDate.textContent = 'بث مباشر الآن';
+            modalComments.textContent = ''; 
+        }
+
+        modal.style.display = 'block';
+    }
+});
+
+
+closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+    // إيقاف تشغيل الفيديو عند إغلاق الـ Modal
+    modalVideoFrame.innerHTML = ''; 
+});
+
+window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        modal.style.display = 'none';
+        // إيقاف تشغيل الفيديو عند إغلاق الـ Modal
+        modalVideoFrame.innerHTML = '';
+    }
+});
+
+// fallback للصور
+document.querySelectorAll('img, .card-img, .article-img').forEach(el => {
+    // هذه الوظيفة تعمل فقط للـ divs التي تستخدم background-image
+    if (el.classList.contains('card-img') || el.classList.contains('article-img')) {
+        // نعتمد على onerror في HTML
+    } else if (el.tagName === 'IMG') {
+        el.addEventListener('error', () => {
+            el.src = 'https://via.placeholder.com/300x200?text=صورة+غير+متاحة';
+        });
     }
 });
