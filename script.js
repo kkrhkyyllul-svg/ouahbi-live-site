@@ -37,7 +37,7 @@ searchButton.addEventListener('click', () => {
     // يمكن إضافة رسالة "لا توجد نتائج" هنا إذا لزم الأمر
 });
 
-// وظيفة الmodal للتفاصيل (تم تحديثها لدعم الفيديو)
+// وظيفة الmodal للتفاصيل (المنطق الموحد للخبر والفيديو)
 const modal = document.getElementById('newsModal');
 const modalTitle = document.getElementById('modalTitle');
 const modalImage = document.getElementById('modalImage');
@@ -47,27 +47,29 @@ const modalDate = document.getElementById('modalDate');
 const modalComments = document.getElementById('modalComments');
 const closeBtn = document.querySelector('.close-btn');
 
-// دالة لمعالجة فتح الـ Modal
+// استخدام تفويض الحدث (Event Delegation) للتعامل مع جميع الأزرار details-btn
 document.addEventListener('click', (e) => {
     if (e.target.matches('.details-btn')) {
         e.preventDefault();
         const btn = e.target;
         const dataType = btn.getAttribute('data-type');
         
-        // إخفاء جميع العناصر قبل العرض
+        // إخفاء جميع عناصر الميديا الافتراضية قبل العرض
         modalImage.style.display = 'none';
         modalVideoFrame.style.display = 'none';
-        modalContent.textContent = ''; // مسح المحتوى القديم
+        modalVideoFrame.innerHTML = ''; // مسح iframe القديم
+        modalContent.textContent = ''; 
         modalDate.textContent = '';
         modalComments.textContent = '';
         
-        // تعيين العنوان (من data-title أو من العنصر السابق)
+        // تعيين العنوان
+        // نبحث عن العنوان إما في data-title أو في العنصر السابق إذا كان بثاً مباشراً
         const articleTitleElement = btn.closest('.article-content') ? btn.closest('.article-content').querySelector('.article-title') : btn.closest('.match-item').querySelector('span');
         modalTitle.textContent = btn.getAttribute('data-title') || articleTitleElement.textContent;
 
 
         if (dataType === 'news') {
-            // عرض الخبر العادي
+            // منطق عرض الخبر العادي (صورة + نص)
             const image = btn.getAttribute('data-image');
             const content = btn.getAttribute('data-content');
             const date = btn.getAttribute('data-date');
@@ -81,20 +83,18 @@ document.addEventListener('click', (e) => {
             modalImage.style.display = 'block';
             
         } else if (dataType === 'live') {
-            // عرض البث المباشر - الكود المحدث
+            // منطق عرض البث المباشر (فيديو iframe)
             let videoUrl = btn.getAttribute('data-url');
             
-            // إزالة معلمات التشغيل التلقائي/الصوت إن وجدت لضمان التوافق
-            videoUrl = videoUrl.replace('?autoplay=1&mute=0', '').replace('?autoplay=1&mute=1', '');
-
-            // بناء كود iframe يوتيوب
+            // التأكد من أن الرابط هو رابط تضمين (embed) وليس رابط مشاهدة عادي
+            // تم إزالة autoplay لتجنب مشاكل المتصفحات، سيحتاج المستخدم للضغط على زر التشغيل يدوياً.
             const youtubeIframe = `
                 <iframe 
                     width="100%" 
                     height="100%" 
                     src="${videoUrl}" 
                     frameborder="0" 
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen
                     sandbox="allow-scripts allow-same-origin allow-presentation"
                 ></iframe>`;
@@ -103,8 +103,8 @@ document.addEventListener('click', (e) => {
             modalVideoFrame.innerHTML = youtubeIframe;
             modalVideoFrame.style.display = 'block';
             
-            // إخفاء المحتوى النصي المخصص للأخبار
-            modalContent.textContent = '';
+            // إظهار المعلومات المناسبة للبث
+            modalContent.textContent = 'شاهد البث المباشر للأخبار العاجلة الآن.';
             modalDate.textContent = 'بث مباشر الآن';
             modalComments.textContent = ''; 
         }
@@ -116,7 +116,7 @@ document.addEventListener('click', (e) => {
 
 closeBtn.addEventListener('click', () => {
     modal.style.display = 'none';
-    // إيقاف تشغيل الفيديو عند إغلاق الـ Modal
+    // إيقاف تشغيل الفيديو عند إغلاق الـ Modal لمنع استمرار الصوت
     modalVideoFrame.innerHTML = ''; 
 });
 
@@ -130,10 +130,8 @@ window.addEventListener('click', (e) => {
 
 // fallback للصور
 document.querySelectorAll('img, .card-img, .article-img').forEach(el => {
-    // هذه الوظيفة تعمل فقط للـ divs التي تستخدم background-image
-    if (el.classList.contains('card-img') || el.classList.contains('article-img')) {
-        // نعتمد على onerror في HTML
-    } else if (el.tagName === 'IMG') {
+    // نعتمد على onerror في HTML للـ divs
+    if (el.tagName === 'IMG') {
         el.addEventListener('error', () => {
             el.src = 'https://via.placeholder.com/300x200?text=صورة+غير+متاحة';
         });

@@ -88,7 +88,7 @@ a {
 
 .nav-item:hover, .nav-item.active {
     background-color: var(--hover-bg);
-    color: var(--accent-color); /* إضافة لون مميز للنص عند التفاعل */
+    color: var(--accent-color);
 }
 
 .search-bar {
@@ -210,7 +210,7 @@ a {
     justify-content: space-between;
     font-size: 0.9rem;
     color: #666;
-    margin-top: 1rem; /* إضافة مسافة علوية للميتاداتا */
+    margin-top: 1rem; 
 }
 
 /* شبكة البطاقات */
@@ -267,7 +267,7 @@ a {
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    height: fit-content; /* لضمان ألا يمتد الشريط الجانبي إلى الأسفل أكثر من اللازم */
+    height: fit-content;
 }
 
 .sidebar-title {
@@ -289,7 +289,7 @@ a {
 .views {
     color: #666;
     font-size: 0.8rem;
-    display: block; /* لجعل المشاهدات تظهر في سطر جديد */
+    display: block; 
 }
 
 /* تنسيق مباريات مباشرة */
@@ -304,7 +304,7 @@ a {
     border-bottom: none;
 }
 
-/* تم تعديل هذا الزر ليصبح كـ a tag وله تنسيقه الخاص */
+/* زر البث المباشر (a tag) */
 .live-btn-link {
     background-color: var(--accent-color);
     color: white;
@@ -319,7 +319,7 @@ a {
 
 .live-btn-link:hover {
     background-color: #0056b3;
-    color: white; /* تأكيد لون النص عند التحويم */
+    color: white; 
 }
 
 /* الmodal */
@@ -333,7 +333,7 @@ a {
     height: 100%;
     background-color: var(--modal-bg);
     transition: opacity 0.3s;
-    overflow: auto; /* مهم لإمكانية التمرير */
+    overflow: auto; 
 }
 
 .modal-content {
@@ -360,7 +360,7 @@ a {
 #modalMediaContainer {
     margin-bottom: 1rem;
     border-radius: 10px;
-    overflow: hidden; /* لحماية الأركان من iframe */
+    overflow: hidden; 
 }
 .modal-img {
     height: 200px;
@@ -368,7 +368,7 @@ a {
     background-position: center;
 }
 
-/* تنسيق الفيديو المتجاوب */
+/* تنسيق الفيديو المتجاوب (مهم جداً لنجاح التضمين) */
 .video-responsive {
     position: relative;
     padding-bottom: 56.25%; /* نسبة 16:9 */
@@ -426,12 +426,12 @@ a {
 
 
 /* الاستجابة */
-@media (max-width: 992px) { /* تعديل نقطة التوقف لتكون متجاوبة بشكل أفضل على أجهزة التابلت */
+@media (max-width: 992px) { 
     .main-grid, .sport-grid {
         grid-template-columns: 1fr;
     }
     .trending-sidebar, .live-matches-sidebar {
-        order: -1; /* لجعل الشريط الجانبي يظهر قبل الأخبار في وضع العمود الواحد */
+        order: -1; 
     }
 }
 
