@@ -141,7 +141,15 @@ a {
 /* أقسام الأخبار */
 .news-section {
     margin-bottom: 3rem;
+    /* القاعدة الجديدة لإخفاء الأقسام */
+    display: none; 
 }
+
+/* القاعدة الجديدة لعرض القسم النشط */
+.news-section.active-section {
+    display: block; 
+}
+
 
 .section-title {
     font-size: 1.8rem;
@@ -292,21 +300,28 @@ a {
     display: block; 
 }
 
-/* تنسيق مباريات مباشرة */
+/* تنسيق قائمة البث المباشر */
+.live-matches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
 .match-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--border-color);
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background-color: var(--card-bg);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
-.match-item:last-child {
-    border-bottom: none;
-}
+
 
 /* زر البث المباشر (a tag) */
 .live-btn-link {
-    background-color: var(--accent-color);
+    background-color: #dc3545; /* تغيير اللون للأحمر لـ "مباشر" */
     color: white;
     border: none;
     padding: 0.5rem 1rem;
@@ -318,7 +333,7 @@ a {
 }
 
 .live-btn-link:hover {
-    background-color: #0056b3;
+    background-color: #c82333;
     color: white; 
 }
 
@@ -430,7 +445,7 @@ a {
     .main-grid, .sport-grid {
         grid-template-columns: 1fr;
     }
-    .trending-sidebar, .live-matches-sidebar {
+    .trending-sidebar {
         order: -1; 
     }
 }

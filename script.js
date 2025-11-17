@@ -18,24 +18,79 @@ if (savedDarkMode === 'true') {
 
 darkModeToggle.addEventListener('click', toggleDarkMode);
 
+// *** منطق التبويبات (Tabs Logic) الجديد ***
+const navItems = document.querySelectorAll('.main-nav .nav-item');
+const sections = document.querySelectorAll('.news-section');
+
+function showSection(sectionId) {
+    // 1. إخفاء جميع الأقسام
+    sections.forEach(section => {
+        section.classList.remove('active-section');
+    });
+
+    // 2. إظهار القسم المطلوب
+    const targetSection = document.getElementById(sectionId + '-section');
+    if (targetSection) {
+        targetSection.classList.add('active-section');
+    }
+    
+    // 3. مسح نتائج البحث عند تغيير القسم
+    searchInput.value = '';
+    const articles = document.querySelectorAll('.news-card, .feature-article, .match-item');
+    articles.forEach(article => {
+        article.style.display = ''; // إعادة إظهار جميع المقالات
+    });
+}
+
+// إضافة مُستمعي الأحداث لأزرار التنقل
+navItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // إزالة حالة النشاط من جميع الأزرار
+        navItems.forEach(nav => nav.classList.remove('active'));
+        
+        // إضافة حالة النشاط للزر الحالي
+        item.classList.add('active');
+        
+        // عرض القسم المقابل
+        const sectionId = item.getAttribute('data-section');
+        showSection(sectionId);
+    });
+});
+
 // وظيفة البحث داخل الصفحة
 const searchButton = document.getElementById('searchButton');
 const searchInput = document.getElementById('searchInput');
 
 searchButton.addEventListener('click', () => {
     const query = searchInput.value.toLowerCase();
-    const articles = document.querySelectorAll('.news-card, .feature-article');
+    
+    // البحث يكون ضمن القسم النشط فقط
+    const activeSection = document.querySelector('.news-section.active-section');
+    if (!activeSection) return; // لا يوجد قسم نشط
+
+    const articles = activeSection.querySelectorAll('.news-card, .feature-article, .match-item');
+    let resultsFound = false;
+
     articles.forEach(article => {
         const text = article.textContent.toLowerCase();
         // إخفاء أو إظهار العنصر
         if (text.includes(query) || query === '') {
             article.style.display = 'block';
+            resultsFound = true;
         } else {
             article.style.display = 'none';
         }
     });
+
     // يمكن إضافة رسالة "لا توجد نتائج" هنا إذا لزم الأمر
+    if (query !== '' && !resultsFound) {
+        // يمكنك هنا عرض رسالة أو تنبيه بعدم وجود نتائج
+        console.log("No results found in the active section.");
+    }
 });
+
 
 // وظيفة الmodal للتفاصيل (المنطق الموحد للخبر والفيديو)
 const modal = document.getElementById('newsModal');

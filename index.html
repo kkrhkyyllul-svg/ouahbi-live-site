@@ -20,10 +20,11 @@
             </div>
             
             <nav class="main-nav">
-                <a href="#" class="nav-item active"><i class="fas fa-home"></i> الرئيسية</a>
-                <a href="#sport-section" class="nav-item"><i class="fas fa-futbol"></i> الرياضة</a>
-                <a href="#economy-section" class="nav-item"><i class="fas fa-chart-line"></i> الاقتصاد</a>
-                <a href="#local-section" class="nav-item"><i class="fas fa-city"></i> محلي</a> <a href="#live-section" class="nav-item live-link"><i class="fas fa-tv"></i> المباشر</a>
+                <a href="#" class="nav-item active" data-section="home"><i class="fas fa-home"></i> الرئيسية</a>
+                <a href="#" class="nav-item" data-section="sport"><i class="fas fa-futbol"></i> الرياضة</a>
+                <a href="#" class="nav-item" data-section="economy"><i class="fas fa-chart-line"></i> الاقتصاد</a>
+                <a href="#" class="nav-item" data-section="local"><i class="fas fa-city"></i> محلي</a> 
+                <a href="#" class="nav-item live-link" data-section="live"><i class="fas fa-tv"></i> المباشر</a>
                 <a href="#"><i class="fas fa-envelope"></i> تواصل</a>
             </nav>
             
@@ -37,7 +38,7 @@
 
     <main class="container">
         
-        <section class="news-section">
+        <section class="news-section active-section" id="home-section">
             <h2 class="section-title"><i class="fas fa-globe"></i> أخبار عاجلة ومختارة</h2>
             
             <div class="main-grid">
@@ -172,22 +173,22 @@
                     
                 </div>
                 
-                <aside class="live-matches-sidebar" id="live-section">
-                    <h4 class="sidebar-title"><i class="fas fa-play-circle"></i> بث مباشر وأخبار عاجلة</h4>
-                    
-                    <div class="match-item news-stream">
-                        <span>عاجل🚨ضرب مصر بالنووي | إسرائيل...</span>
-                        <a href="#" class="details-btn live-btn-link" data-type="live" data-url="https://www.youtube.com/embed/QX1oBPP437c">شاهد الآن</a>
-                    </div>
-                    
-                    <div class="match-item sports-stream">
-                        <span>ريال مدريد vs برشلونة</span>
-                        <a href="#" class="details-btn live-btn-link" data-type="live" data-url="https://www.youtube.com/embed/dQw4w9WgXcQ">شاهد الآن</a>
-                    </div>
-                    <div class="match-item sports-stream">
-                        <span>الأهلي vs الزمالك</span>
-                        <a href="#" class="details-btn live-btn-link" data-type="live" data-url="https://www.youtube.com/embed/dQw4w9WgXcQ">شاهد الآن</a>
-                    </div>
+                <aside class="trending-sidebar">
+                    <h4 class="sidebar-title"><i class="fas fa-fire-alt"></i> آخر الأخبار الرياضية</h4>
+                    <ul class="article-list">
+                        <li>
+                            <a href="#">تصريحات نارية لمدرب الأهلي بعد الخسارة</a>
+                            <span class="views">12000 مشاهدة</span>
+                        </li>
+                        <li>
+                            <a href="#">مفاجأة: ريال مدريد يتفاوض مع نجم شاب</a>
+                            <span class="views">9500 مشاهدة</span>
+                        </li>
+                        <li>
+                            <a href="#">احتجاجات جماهيرية ضد قرارات الحكم</a>
+                            <span class="views">7000 مشاهدة</span>
+                        </li>
+                    </ul>
                 </aside>
             </div>
         </section>
@@ -259,6 +260,26 @@
                     </div>
                 </div>
 
+            </div>
+        </section>
+
+        <section class="news-section" id="live-section">
+            <h2 class="section-title"><i class="fas fa-tv"></i> البث المباشر</h2>
+            
+            <div class="live-matches-grid">
+                 <div class="match-item news-stream">
+                    <span>عاجل🚨ضرب مصر بالنووي | إسرائيل...</span>
+                    <a href="#" class="details-btn live-btn-link" data-type="live" data-url="https://www.youtube.com/embed/QX1oBPP437c">شاهد الآن</a>
+                </div>
+                
+                <div class="match-item sports-stream">
+                    <span>ريال مدريد vs برشلونة</span>
+                    <a href="#" class="details-btn live-btn-link" data-type="live" data-url="https://www.youtube.com/embed/dQw4w9WgXcQ">شاهد الآن</a>
+                </div>
+                <div class="match-item sports-stream">
+                    <span>الأهلي vs الزمالك</span>
+                    <a href="#" class="details-btn live-btn-link" data-type="live" data-url="https://www.youtube.com/embed/dQw4w9WgXcQ">شاهد الآن</a>
+                </div>
             </div>
         </section>
 
